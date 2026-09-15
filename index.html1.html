@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سؤال مهم جدًا</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f8eee8,#fffaf6);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;color:#29221f;overflow:hidden}
+.phone{width:min(390px,92vw);min-height:690px;background:#fffdfb;border:1px solid #eadbd2;border-radius:34px;box-shadow:0 25px 70px rgba(74,45,31,.16);padding:28px 24px;position:relative;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.small{font-size:12px;letter-spacing:1.5px;color:#a07d6b;margin-bottom:16px}
+h1{font-family:Georgia,serif;font-size:36px;line-height:1.18;margin:0 0 18px}
+.question{font-size:18px;line-height:1.6;color:#67554c;margin:0 auto 30px;max-width:310px}
+.name{font-weight:800}
+.choices{display:flex;gap:12px;justify-content:center;position:relative;height:54px;direction:rtl}
+button{border:0;border-radius:15px;padding:0 20px;height:54px;font-size:15px;font-weight:700;cursor:pointer;transition:transform .18s ease}
+#yes{background:#9b5d45;color:#fff;box-shadow:0 8px 18px rgba(155,93,69,.22)}
+#no{background:#f0e6e0;color:#765f54;position:relative}
+.result{display:none;animation:pop .45s ease}
+.emoji{font-size:58px;margin-bottom:10px}
+.result h2{font-family:Georgia,serif;font-size:32px;margin:0 0 12px}
+.result p{font-size:17px;line-height:1.6;color:#67554c}
+.card{margin-top:22px;padding:18px;border-radius:20px;background:#f8eee8;text-align:right}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eadbd2;font-size:14px}
+.row:last-child{border-bottom:0}
+.label{color:#987b6d}.value{font-weight:700}
+.again{margin-top:20px;background:#29221f;color:#fff;width:100%}
+.toast{position:absolute;left:50%;top:18px;transform:translate(-50%,-20px);background:#29221f;color:#fff;padding:10px 15px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.footer{position:absolute;bottom:19px;left:0;right:0;font-size:11px;color:#b19b90}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.shake{animation:shake .25s ease}
+</style>
+</head>
+<body>
+<main class="phone">
+<div class="toast" id="toast"></div>
+<section id="questionScreen">
+<div class="small">استبيان علمي ومحايد جدًا 😂</div>
+<h1>من هو أفضل شخص في العالم؟</h1>
+<p class="question">اختر إجابتك بعناية…<br><strong>الموضوع مصيري.</strong></p>
+<div class="choices">
+<button id="yes">عبدالرحمن ❤️</button>
+<button id="no">شخص آخر 🤨</button>
+</div>
+</section>
+<section class="result" id="resultScreen">
+<div class="emoji">🏆</div>
+<h2>إجابة صحيحة!</h2>
+<p>واضح إن عندك ذوق راقي 😂❤️</p>
+<div class="card">
+<div class="row"><span class="label">الفائز</span><span class="value">عبدالرحمن</span></div>
+<div class="row"><span class="label">اللقب</span><span class="value">أفضل شخص في العالم</span></div>
+<div class="row"><span class="label">التقييم</span><span class="value">ممتاز جدًا ⭐</span></div>
+</div>
+<button class="again" onclick="location.reload()">أعيدي الاختبار 😏</button>
+</section>
+<div class="footer">* النتائج مثبتة علميًا… تقريبًا.</div>
+</main>
+<script>
+const no=document.getElementById('no'),yes=document.getElementById('yes'),toast=document.getElementById('toast'),q=document.getElementById('questionScreen'),r=document.getElementById('resultScreen');
+const messages=["متأكدة؟ 😐","فكري فيها مرة ثانية…","محاولة حلوة 😂","الزر نفسه غير مقتنع بإجابتك.","إجابة خاطئة… بوضوح.","احترمي العلم لو سمحتي 😂","تبغين تختارين هذا فعلًا؟ 👀","ما راح أخليك تضغطينه 😌"];
+let count=0;
+function showToast(m){toast.textContent=m;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1100)}
+function escapeNo(){const x=Math.round((Math.random()*2-1)*105),y=Math.round((Math.random()*2-1)*105);no.style.transform=`translate(${x}px,${y}px)`;no.classList.remove('shake');void no.offsetWidth;no.classList.add('shake');showToast(messages[count%messages.length]);count++}
+no.addEventListener('mouseenter',escapeNo);no.addEventListener('touchstart',e=>{e.preventDefault();escapeNo()});no.addEventListener('click',escapeNo);
+yes.addEventListener('click',()=>{q.style.display='none';r.style.display='block';document.querySelector('.footer').textContent='* النتائج تم اعتمادها من لجنة عبدالرحمن العليا.'});
+</script>
+</body>
+</html>
